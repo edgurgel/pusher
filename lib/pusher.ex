@@ -1,10 +1,21 @@
 defmodule Pusher do
   alias Pusher.CryptoHelper
+
+  @doc """
+  Trigger a simple `event` on a `channel` sending some `data`
+  """
   def trigger(event, data, channel) do
     body = JSEX.encode!([name: event, channel: channel, data: data])
     headers = [{"Content-type", "application/json"}]
     {:ok, code, headers, client} = signed_request(:post, "/apps/#{app_id}/events", headers, body)
     code
+  end
+
+  def channels do
+    headers = [{"Accept", "application/json"}]
+    {:ok, code, headers, client} = signed_request(:get, "/apps/#{app_id}/channels", headers)
+    {:ok, body, client} = :hackney.body(client)
+    {code, body}
   end
 
   defp base_url do
@@ -13,15 +24,20 @@ defmodule Pusher do
     "#{host}:#{port}"
   end
 
-  # Check if body is empty
-  defp signed_request(method, path, headers, body) do
+  @doc """
+  More info at: http://pusher.com/docs/rest_api#authentication
+  """
+  defp signed_request(method, path, headers // [], body // "") do
     url = base_url <> path
-    qs_vals = base_qs_vals ++ [
-      body_md5: CryptoHelper.md5_to_binary(body)
-    ]
+    qs_vals = add_body_md5(base_qs_vals, body)
     auth_signature = auth_signature(method, path, qs_vals)
     qs_vals = :uri.to_query(qs_vals ++ [auth_signature: auth_signature])
     :hackney.request(method, url <> "?" <> qs_vals, headers, body, [])
+  end
+
+  defp add_body_md5(qs_vals, ""), do: qs_vals
+  defp add_body_md5(qs_vals, body) do
+    qs_vals ++ [ body_md5: CryptoHelper.md5_to_binary(body) ]
   end
 
   defp auth_signature(method, path, qs_vals) do
