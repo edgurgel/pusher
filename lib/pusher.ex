@@ -1,4 +1,6 @@
 defmodule Pusher do
+  use HTTPoison.Base
+
   alias Pusher.CryptoHelper
 
   @doc """
@@ -7,15 +9,19 @@ defmodule Pusher do
   def trigger(event, data, channel) do
     body = JSEX.encode!([name: event, channel: channel, data: data])
     headers = [{"Content-type", "application/json"}]
-    {:ok, code, headers, client} = signed_request(:post, "/apps/#{app_id}/events", headers, body)
-    code
+    response = post("/apps/#{app_id}/events", body, headers)
+    response.status_code
   end
 
   def channels do
     headers = [{"Accept", "application/json"}]
-    {:ok, code, headers, client} = signed_request(:get, "/apps/#{app_id}/channels", headers)
-    {:ok, body, client} = :hackney.body(client)
-    {code, body}
+    response = get("/apps/#{app_id}/channels", headers)
+
+    {response.status_code, response.body}
+  end
+
+  def process_url(url) do
+    base_url <> url
   end
 
   defp base_url do
@@ -24,15 +30,18 @@ defmodule Pusher do
     "#{host}:#{port}"
   end
 
+  def process_response_body(body) do
+    unless body == "", do: body |> JSEX.decode!, else: nil
+  end
+
   @doc """
   More info at: http://pusher.com/docs/rest_api#authentication
   """
-  defp signed_request(method, path, headers // [], body // "") do
-    url = base_url <> path
+  def request(method, path, body // "", headers // [], options // []) do
     qs_vals = add_body_md5(base_qs_vals, body)
     auth_signature = auth_signature(method, path, qs_vals)
     qs_vals = :uri.to_query(qs_vals ++ [auth_signature: auth_signature])
-    :hackney.request(method, url <> "?" <> qs_vals, headers, body, [])
+    super(method, path <> "?" <> qs_vals, body, headers, options)
   end
 
   defp add_body_md5(qs_vals, ""), do: qs_vals

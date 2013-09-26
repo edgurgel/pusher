@@ -10,7 +10,7 @@ defmodule Pusher.Mixfile do
 
    def application do
     [
-      applications: [ :hackney, :jsex ],
+      applications: [ :httpoison, :jsex ],
       env: [
         host: "http://localhost",
         port: "8080",
@@ -23,7 +23,7 @@ defmodule Pusher.Mixfile do
 
   defp deps(:dev) do
     [
-     {:hackney, github: "benoitc/hackney"},
+     {:httpoison, github: "edgurgel/httpoison"},
      {:jsex, github: "talentdeficit/jsex"},
      {:uri, github: "erlware/uri"},
      {:erlsha2, github: "vinoski/erlsha2" }
