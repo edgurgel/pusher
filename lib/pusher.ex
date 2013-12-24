@@ -40,7 +40,7 @@ defmodule Pusher do
   def request(method, path, body // "", headers // [], options // []) do
     qs_vals = add_body_md5(base_qs_vals, body)
     auth_signature = auth_signature(method, path, qs_vals)
-    qs_vals = :uri.to_query(qs_vals ++ [auth_signature: auth_signature])
+    qs_vals = URI.encode_query(qs_vals ++ [auth_signature: auth_signature])
     super(method, path <> "?" <> qs_vals, body, headers, options)
   end
 
@@ -50,7 +50,7 @@ defmodule Pusher do
   end
 
   defp auth_signature(method, path, qs_vals) do
-    to_sign = String.upcase(to_string(method)) <> "\n" <> path <> "\n" <> :uri.to_query(qs_vals)
+    to_sign = String.upcase(to_string(method)) <> "\n" <> path <> "\n" <> URI.encode_query(qs_vals)
     CryptoHelper.hmac256_to_binary(app_secret, to_sign)
   end
 

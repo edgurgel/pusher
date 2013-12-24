@@ -25,7 +25,6 @@ defmodule Pusher.Mixfile do
     [
      {:httpoison, github: "edgurgel/httpoison"},
      {:jsex, github: "talentdeficit/jsex"},
-     {:uri, github: "erlware/uri"},
      {:erlsha2, github: "vinoski/erlsha2" }
     ]
    end
