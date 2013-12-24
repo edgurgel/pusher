@@ -1,8 +1,9 @@
 [ "erlsha2": {:git, "git://github.com/vinoski/erlsha2.git", "79e2564c81ee94718711d48516aac3cab7794c35", []},
   "hackney": {:git, "git://github.com/benoitc/hackney.git", "5b0f7eb949ebebd6fabfbc4e08a7b7231850606a", [{:tag, "0.4.4"}]},
-  "httpoison": {:git, "git://github.com/edgurgel/httpoison.git", "0d9daf63f6c89e03866bca85f705a26e64d97094", []},
+  "httpoison": {:git, "git://github.com/edgurgel/httpoison.git", "788cf244e2fb795821b56b8b6c78b8ee55e17c0d", []},
   "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "e870b17fe168f5cc87505c88e578858532bd0d66", []},
   "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "352d6b21cbec4fe1b66bc7ce3ded67a3b32add2c", [{:tag, "v1.4.2"}]},
+  "meck": {:git, "git://github.com/eproxus/meck.git", "2447206f201bab1054c49cd32621eee23fa0ee3b", [{:tag, "0.7.2"}]},
   "mimetypes": {:git, "https://github.com/spawngrid/mimetypes.git", "47d37a977a7d633199822bf6b08353007483d00f", [{:ref, "master"}]},
   "rebar_vsn_plugin": {:git, "https://github.com/erlware/rebar_vsn_plugin.git", "07978662cf362368c75e0a03b94ff5b3cb3fa0e7", [{:branch, "master"}]},
   "uri": {:git, "git://github.com/erlware/uri.git", "06a6753946e9a19c818129abedb9c6841cffb451", []} ]
