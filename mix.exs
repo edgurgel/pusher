@@ -25,7 +25,6 @@ defmodule Pusher.Mixfile do
     [
      {:httpoison, github: "edgurgel/httpoison"},
      {:jsex, github: "talentdeficit/jsex", ref: "c9df36f07b2089a73ab6b32074c01728f1e5a2e1"},
-     {:erlsha2, github: "vinoski/erlsha2" }
     ]
    end
 

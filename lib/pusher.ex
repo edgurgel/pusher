@@ -46,7 +46,7 @@ defmodule Pusher do
 
   defp add_body_md5(qs_vals, ""), do: qs_vals
   defp add_body_md5(qs_vals, body) do
-    qs_vals ++ [ body_md5: CryptoHelper.md5_to_binary(body) ]
+    qs_vals ++ [ body_md5: CryptoHelper.md5_to_string(body) ]
   end
 
   defp auth_signature(method, path, qs_vals) do
