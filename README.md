@@ -1,4 +1,4 @@
-# Pusher
+# Pusher [![Build Status](https://travis-ci.org/edgurgel/pusher.png?branch=master)](https://travis-ci.org/edgurgel/pusher)
 
 ## Description
 
