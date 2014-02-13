@@ -37,7 +37,7 @@ defmodule Pusher do
   @doc """
   More info at: http://pusher.com/docs/rest_api#authentication
   """
-  def request(method, path, body // "", headers // [], options // []) do
+  def request(method, path, body \\ "", headers \\ [], options \\ []) do
     qs_vals = add_body_md5(base_qs_vals, body)
     auth_signature = auth_signature(method, path, qs_vals)
     qs_vals = URI.encode_query(qs_vals ++ [auth_signature: auth_signature])
