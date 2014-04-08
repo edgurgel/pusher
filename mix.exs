@@ -33,7 +33,7 @@ defmodule Pusher.Mixfile do
    end
 
   defp deps(:test) do
-    deps(:dev) ++ [ {:meck, github: "eproxus/meck", tag: "0.7.2" } ]
+    deps(:dev) ++ [ {:meck, github: "eproxus/meck", tag: "0.8" } ]
   end
 
   defp deps(_), do: deps(:dev)
