@@ -51,7 +51,7 @@ defmodule Pusher do
 
   defp auth_signature(method, path, qs_vals) do
     to_sign = String.upcase(to_string(method)) <> "\n" <> path <> "\n" <> URI.encode_query(qs_vals)
-    CryptoHelper.hmac256_to_binary(app_secret, to_sign)
+    CryptoHelper.hmac256_to_binary(secret, to_sign)
   end
 
   defp base_qs_vals do
@@ -67,14 +67,22 @@ defmodule Pusher do
     mega * 1000000 + sec
   end
 
+  def configure!(host, port, app_id, app_key, secret) do
+    :application.set_env(:pusher, :host, host)
+    :application.set_env(:pusher, :port, port)
+    :application.set_env(:pusher, :app_id, app_id)
+    :application.set_env(:pusher, :app_key, app_key)
+    :application.set_env(:pusher, :secret, secret)
+  end
+
   defp app_id do
     {:ok, app_id} = :application.get_env(:pusher, :app_id)
     app_id
   end
 
-  defp app_secret do
-    {:ok, app_secret} = :application.get_env(:pusher, :app_secret)
-    app_secret
+  defp secret do
+    {:ok, secret} = :application.get_env(:pusher, :secret)
+    secret
   end
 
   defp app_key do
