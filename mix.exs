@@ -15,8 +15,8 @@ defmodule Pusher.Mixfile do
         host: "http://localhost",
         port: "8080",
         app_key: "app_key",
-        app_secret: "secret",
-        app_id: "app_id"
+        app_id: "app_id",
+        secret: "secret"
       ]
     ]
   end

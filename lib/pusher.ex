@@ -51,7 +51,7 @@ defmodule Pusher do
 
   defp auth_signature(method, path, qs_vals) do
     to_sign = String.upcase(to_string(method)) <> "\n" <> path <> "\n" <> URI.encode_query(qs_vals)
-    CryptoHelper.hmac256_to_binary(secret, to_sign)
+    CryptoHelper.hmac256_to_string(secret, to_sign)
   end
 
   defp base_qs_vals do
