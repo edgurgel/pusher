@@ -13,6 +13,9 @@ defmodule Pusher do
     response.status_code
   end
 
+  @doc """
+  Get the list of occupied channels
+  """
   def channels do
     headers = [{"Accept", "application/json"}]
     response = get("/apps/#{app_id}/channels", headers)

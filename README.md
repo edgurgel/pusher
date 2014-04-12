@@ -13,7 +13,13 @@ Pusher.configure!("localhost", 8080, "app_id", "app_key", "secret")
 ```elixir
 Pusher.trigger("message", [text: "Hello!"], "chat-channel")
 ```
+
+To get occupied channels:
+
+```elixir
+Pusher.channels
+```
 ## TODO
 
 * Add tests
-* Add support to `/channels`, `/channels/:channel_name`, etc
+* Add support to `/channels/:channel_name`, etc
