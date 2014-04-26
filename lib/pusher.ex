@@ -1,7 +1,7 @@
 defmodule Pusher do
   use HTTPoison.Base
 
-  alias Pusher.CryptoHelper
+  alias Signaturex.CryptoHelper
 
   @doc """
   Trigger a simple `event` on a `channel` sending some `data`
@@ -41,34 +41,15 @@ defmodule Pusher do
   More info at: http://pusher.com/docs/rest_api#authentication
   """
   def request(method, path, body \\ "", headers \\ [], options \\ []) do
-    qs_vals = add_body_md5(base_qs_vals, body)
-    auth_signature = auth_signature(method, path, qs_vals)
-    qs_vals = URI.encode_query(qs_vals ++ [auth_signature: auth_signature])
-    super(method, path <> "?" <> qs_vals, body, headers, options)
+    qs_vals = if body == "", do: [],
+              else: [ body_md5: CryptoHelper.md5_to_string(body) ]
+    signed_qs_vals =
+      Signaturex.sign(app_key, secret, method, path, qs_vals)
+      |> Dict.merge(qs_vals)
+      |> URI.encode_query
+    super(method, path <> "?" <> signed_qs_vals, body, headers, options)
   end
 
-  defp add_body_md5(qs_vals, ""), do: qs_vals
-  defp add_body_md5(qs_vals, body) do
-    qs_vals ++ [ body_md5: CryptoHelper.md5_to_string(body) ]
-  end
-
-  defp auth_signature(method, path, qs_vals) do
-    to_sign = String.upcase(to_string(method)) <> "\n" <> path <> "\n" <> URI.encode_query(qs_vals)
-    CryptoHelper.hmac256_to_string(secret, to_sign)
-  end
-
-  defp base_qs_vals do
-    [
-      auth_key: app_key,
-      auth_timestamp: timestamp,
-      auth_version: "1.0"
-    ]
-  end
-
-  defp timestamp do
-    {mega, sec, _micro} = :os.timestamp()
-    mega * 1000000 + sec
-  end
 
   def configure!(host, port, app_id, app_key, secret) do
     :application.set_env(:pusher, :host, host)

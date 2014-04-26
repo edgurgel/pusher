@@ -24,6 +24,7 @@ defmodule Pusher.Mixfile do
   defp deps(:dev) do
     [
      {:httpoison, github: "edgurgel/httpoison", tag: "0.0.2"},
+     {:signaturex, github: "edgurgel/signaturex"},
      {:jsex, github: "talentdeficit/jsex"},
     ]
    end
