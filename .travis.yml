@@ -6,10 +6,11 @@ otp_release:
   - R16B
   - R16B01
   - R16B02
+  - R16B03
 script: mix test
 install: mix deps.get
 before_install:
   - mkdir -p vendor/elixir
-  - wget -q https://github.com/elixir-lang/elixir/releases/download/v0.12.4/Precompiled.zip && unzip -qq Precompiled.zip -d vendor/elixir
+  - wget -q https://github.com/elixir-lang/elixir/releases/download/v0.12.5/Precompiled.zip && unzip -qq Precompiled.zip -d vendor/elixir
   - export PATH="$PATH:$PWD/vendor/elixir/bin"
   - export MIX_ENV=test
