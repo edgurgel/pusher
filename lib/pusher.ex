@@ -41,8 +41,8 @@ defmodule Pusher do
   More info at: http://pusher.com/docs/rest_api#authentication
   """
   def request(method, path, body \\ "", headers \\ [], options \\ []) do
-    qs_vals = if body == "", do: [],
-              else: [ body_md5: CryptoHelper.md5_to_string(body) ]
+    qs_vals = if body == "", do: %{},
+              else: %{ body_md5: CryptoHelper.md5_to_string(body) }
     signed_qs_vals =
       Signaturex.sign(app_key, secret, method, path, qs_vals)
       |> Dict.merge(qs_vals)

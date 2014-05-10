@@ -1,8 +1,9 @@
-[ "hackney": {:git, "git://github.com/benoitc/hackney.git", "7f2a0b5996313d930277786e7ff5d538e9346547", [tag: "0.10.1"]},
-  "hackney_lib": {:git, "https://github.com/benoitc/hackney_lib.git", "eecdb481f1d38bfb194896bffdf9bdcdd967ae96", [tag: "0.2.2"]},
-  "httpoison": {:git, "git://github.com/edgurgel/httpoison.git", "d2bde2efdf122cd4d33fa748c599c45425f7b1a2", [tag: "0.0.2"]},
-  "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "65aa6ae7c1543a0c4e83032c04626af7be7a7f3e", []},
-  "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [tag: "v1.4.3"]},
-  "meck": {:git, "git://github.com/eproxus/meck.git", "917690864617cb9a565e58484c73275a7b40a997", [tag: "0.8"]},
+%{"hackney": {:git, "git://github.com/benoitc/hackney.git", "cf90543f9cc21ffea34d71035521b0102b8555cf", [ref: "cf90543f9cc21ffea34d71035521b0102b8555cf"]},
+  "hackney_lib": {:git, "https://github.com/benoitc/hackney_lib.git", "48a5a3fc64892c95e4e3efdd464f26ca5683d2f9", [tag: "0.3.0"]},
+  "httpoison": {:git, "git://github.com/edgurgel/httpoison.git", "0321ab15be39ea72aa4cc1c38f1ef40d1d3832ab", [tag: "0.1.0"]},
+  "idna": {:git, "git://github.com/benoitc/erlang-idna.git", "21aa158b7f36bf2a000f12fe40d7f21eece9cf65", [tag: "hackney-0.11.2"]},
+  "jsex": {:package, "2.0.0"},
+  "jsx": {:package, "2.0.2"},
+  "meck": {:git, "git://github.com/eproxus/meck.git", "dde759050eff19a1a80fd854d7375174b191665d", [tag: "0.8.2"]},
   "mimetypes": {:git, "git://github.com/spawngrid/mimetypes.git", "47d37a977a7d633199822bf6b08353007483d00f", [ref: "master"]},
-  "signaturex": {:git, "git://github.com/edgurgel/signaturex.git", "74217f445beaccee46734aea3ac18a0b5448d418", []} ]
+  "signaturex": {:package, "0.0.1"}}
