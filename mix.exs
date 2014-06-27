@@ -4,7 +4,7 @@ defmodule Pusher.Mixfile do
   def project do
     [ app: :pusher,
       version: "0.0.1",
-      elixir: "~> 0.14.0",
+      elixir: "~> 0.14.1",
       deps: deps ]
   end
 
@@ -22,8 +22,8 @@ defmodule Pusher.Mixfile do
   end
 
   defp deps do
-    [ {:httpoison, github: "edgurgel/httpoison", tag: "0.2.0"},
-      {:signaturex, "~> 0.0.4"},
+    [ {:httpoison, github: "edgurgel/httpoison", tag: "0.3.0"},
+      {:signaturex, "~> 0.0.5"},
       {:jsex, "~> 2.0"},
       {:meck, github: "eproxus/meck", tag: "0.8.2", only: :test } ]
    end
