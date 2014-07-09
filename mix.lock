@@ -6,4 +6,4 @@
   "jsx": {:package, "2.0.2"},
   "meck": {:git, "git://github.com/eproxus/meck.git", "dde759050eff19a1a80fd854d7375174b191665d", [tag: "0.8.2"]},
   "mimetypes": {:git, "git://github.com/spawngrid/mimetypes.git", "47d37a977a7d633199822bf6b08353007483d00f", [ref: "master"]},
-  "signaturex": {:package, "0.0.5"}}
+  "signaturex": {:package, "0.0.6"}}
