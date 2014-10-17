@@ -17,13 +17,21 @@ defmodule Pusher do
   Get the list of occupied channels
   """
   def channels do
-    headers = %{"Accept" => "application/json"}
-    response = get!("/apps/#{app_id}/channels", headers)
+    response = get!("/apps/#{app_id}/channels")
 
     {response.status_code, response.body}
   end
 
-  def process_url(url), do: base_url <> url
+  @doc """
+  Get the list of users on the prensece `channel`
+  """
+  def users(channel) do
+    response = get!("/apps/#{app_id}/channels/#{channel}/users")
+
+    {response.status_code, response.body}
+  end
+
+  defp process_url(url), do: base_url <> url
 
   defp base_url do
     {:ok, host} = :application.get_env(:pusher, :host)
@@ -31,7 +39,7 @@ defmodule Pusher do
     "#{host}:#{port}"
   end
 
-  def process_response_body(body) do
+  defp process_response_body(body) do
     unless body == "", do: body |> JSEX.decode!, else: nil
   end
 
