@@ -8,8 +8,8 @@ defmodule Pusher do
   """
   def trigger(event, data, channel) do
     body = JSEX.encode!([name: event, channel: channel, data: data])
-    headers = [{"Content-type", "application/json"}]
-    response = post("/apps/#{app_id}/events", body, headers)
+    headers = %{"Content-type" => "application/json"}
+    response = post!("/apps/#{app_id}/events", body, headers)
     response.status_code
   end
 
@@ -17,15 +17,13 @@ defmodule Pusher do
   Get the list of occupied channels
   """
   def channels do
-    headers = [{"Accept", "application/json"}]
-    response = get("/apps/#{app_id}/channels", headers)
+    headers = %{"Accept" => "application/json"}
+    response = get!("/apps/#{app_id}/channels", headers)
 
     {response.status_code, response.body}
   end
 
-  def process_url(url) do
-    base_url <> url
-  end
+  def process_url(url), do: base_url <> url
 
   defp base_url do
     {:ok, host} = :application.get_env(:pusher, :host)
