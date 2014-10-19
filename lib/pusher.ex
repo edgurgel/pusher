@@ -23,6 +23,15 @@ defmodule Pusher do
   end
 
   @doc """
+  Get info related to the `channel`
+  """
+  def channel(channel) do
+    response = get!("/apps/#{app_id}/channels/#{channel}", %{}, qs: %{info: "subscription_count"})
+
+    {response.status_code, response.body}
+  end
+
+  @doc """
   Get the list of users on the prensece `channel`
   """
   def users(channel) do
@@ -47,8 +56,7 @@ defmodule Pusher do
   More info at: http://pusher.com/docs/rest_api#authentication
   """
   def request(method, path, body \\ "", headers \\ [], options \\ []) do
-    qs_vals = if body == "", do: %{},
-              else: %{ body_md5: CryptoHelper.md5_to_string(body) }
+    qs_vals = build_qs(Keyword.get(options, :qs, %{}), body)
     signed_qs_vals =
       Signaturex.sign(app_key, secret, method, path, qs_vals)
       |> Dict.merge(qs_vals)
@@ -56,6 +64,10 @@ defmodule Pusher do
     super(method, path <> "?" <> signed_qs_vals, body, headers, options)
   end
 
+  def build_qs(qs_vals, ""), do: qs_vals
+  def build_qs(qs_vals, body) do
+    Map.put(qs_vals, :body_md5, CryptoHelper.md5_to_string(body))
+  end
 
   def configure!(host, port, app_id, app_key, secret) do
     :application.set_env(:pusher, :host, host)

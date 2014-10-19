@@ -22,4 +22,3 @@ Pusher.channels
 ## TODO
 
 * Add tests
-* Add support to `/channels/:channel_name`, etc
