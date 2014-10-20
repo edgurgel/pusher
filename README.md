@@ -19,6 +19,13 @@ To get occupied channels:
 ```elixir
 Pusher.channels
 ```
+
+To get users connected to a presence channel
+
+```elixir
+Pusher.users("presence-demo")
+```
+
 ## TODO
 
 * Add tests
