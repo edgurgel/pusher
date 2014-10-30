@@ -7,11 +7,15 @@ defmodule Pusher do
   Trigger a simple `event` on a `channel` sending some `data`
   """
   def trigger(event, data, channel) do
-    body = JSEX.encode!([name: event, channel: channel, data: data])
+    data = encoded_data(data)
+    body = JSEX.encode!(%{name: event, channel: channel, data: data})
     headers = %{"Content-type" => "application/json"}
     response = post!("/apps/#{app_id}/events", body, headers)
     response.status_code
   end
+
+  defp encoded_data(data) when is_binary(data), do: data
+  defp encoded_data(data), do: JSEX.encode!(data)
 
   @doc """
   Get the list of occupied channels
