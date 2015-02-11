@@ -1,8 +1,8 @@
-%{"hackney": {:hex, :hackney, "0.14.1"},
+%{"exjsx": {:hex, :exjsx, "3.1.0"},
+  "hackney": {:hex, :hackney, "0.14.1"},
   "httpoison": {:hex, :httpoison, "0.5.0"},
   "idna": {:hex, :idna, "1.0.1"},
-  "jsex": {:hex, :jsex, "2.0.0"},
-  "jsx": {:hex, :jsx, "2.0.2"},
+  "jsx": {:hex, :jsx, "2.4.0"},
   "meck": {:hex, :meck, "0.8.2"},
   "mimetypes": {:git, "git://github.com/spawngrid/mimetypes.git", "47d37a977a7d633199822bf6b08353007483d00f", [ref: "master"]},
   "signaturex": {:hex, :signaturex, "0.0.8"}}

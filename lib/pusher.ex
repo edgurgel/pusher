@@ -8,14 +8,14 @@ defmodule Pusher do
   """
   def trigger(event, data, channel) do
     data = encoded_data(data)
-    body = JSEX.encode!(%{name: event, channel: channel, data: data})
+    body = JSX.encode!(%{name: event, channel: channel, data: data})
     headers = %{"Content-type" => "application/json"}
     response = post!("/apps/#{app_id}/events", body, headers)
     response.status_code
   end
 
   defp encoded_data(data) when is_binary(data), do: data
-  defp encoded_data(data), do: JSEX.encode!(data)
+  defp encoded_data(data), do: JSX.encode!(data)
 
   @doc """
   Get the list of occupied channels
@@ -53,7 +53,7 @@ defmodule Pusher do
   end
 
   defp process_response_body(body) do
-    unless body == "", do: body |> JSEX.decode!, else: nil
+    unless body == "", do: body |> JSX.decode!, else: nil
   end
 
   @doc """

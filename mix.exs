@@ -10,7 +10,7 @@ defmodule Pusher.Mixfile do
 
    def application do
     [
-      applications: [ :httpoison, :jsex ],
+      applications: [ :httpoison, :exjsx ],
       env: [
         host: "http://localhost",
         port: "8080",
@@ -24,7 +24,7 @@ defmodule Pusher.Mixfile do
   defp deps do
     [ {:httpoison, "~> 0.5.0"},
       {:signaturex, "~> 0.0.7"},
-      {:jsex, "~> 2.0"},
+      {:exjsx, "~> 3.0"},
       {:meck, "~> 0.8.2", only: :test } ]
    end
 
