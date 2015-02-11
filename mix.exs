@@ -1,10 +1,17 @@
 defmodule Pusher.Mixfile do
   use Mix.Project
 
+  @description """
+    Pusher HTTP client
+  """
+
   def project do
     [ app: :pusher,
       version: "0.0.1",
       elixir: "~> 1.0.0",
+      name: "Pusher",
+      description: @description,
+      package: package,
       deps: deps ]
   end
 
@@ -28,4 +35,9 @@ defmodule Pusher.Mixfile do
       {:meck, "~> 0.8.2", only: :test } ]
    end
 
+   defp package do
+     [ contributors: ["Eduardo Gurgel Pinho"],
+       licenses: ["MIT"],
+       links: %{"Github" => "https://github.com/edgurgel/pusher"} ]
+   end
 end
