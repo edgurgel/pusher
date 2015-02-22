@@ -4,15 +4,21 @@ defmodule Pusher do
   alias Signaturex.CryptoHelper
 
   @doc """
-  Trigger a simple `event` on a `channel` sending some `data`
+  Trigger a simple `event` on `channels` sending some `data`
   """
-  def trigger(event, data, channel) do
+  def trigger(event, data, channels, socket_id \\ nil) do
     data = encoded_data(data)
-    body = JSX.encode!(%{name: event, channel: channel, data: data})
+    body = case socket_id do
+      nil -> %{name: event, channels: channel_list(channels), data: data}
+      _ -> %{name: event, channels: channel_list(channels), data: data, socket_id: socket_id}
+    end |> JSX.encode!
     headers = %{"Content-type" => "application/json"}
     response = post!("/apps/#{app_id}/events", body, headers)
     response.status_code
   end
+
+  defp channel_list(channels) when is_list(channels), do: channels
+  defp channel_list(channel), do: [channel]
 
   defp encoded_data(data) when is_binary(data), do: data
   defp encoded_data(data), do: JSX.encode!(data)
