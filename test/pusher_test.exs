@@ -34,7 +34,7 @@ defmodule PusherTest do
   test_with_mock ".trigger sends the payload to a single channel", Pusher.HttpClient,
   [post!: fn("/apps/app_id/events", @expected_payload, _) -> @response_succesful_message end] do
     result = Pusher.trigger("event-name", "data", "channel")
-    expected = 200
+    expected = :ok
     assert result == expected
   end
 
@@ -46,7 +46,7 @@ defmodule PusherTest do
   test_with_mock ".channels calls the http client for list of channels", Pusher.HttpClient,
   [get!: fn("/apps/app_id/channels") -> @response_with_channel end] do
     result = Pusher.channels
-    expected = {200, %{"channels" => %{"test_channel" => %{}}}}
+    expected = {:ok, %{"test_channel" => %{}}}
     assert result == expected
   end
 
@@ -58,7 +58,7 @@ defmodule PusherTest do
   test_with_mock ".channel with an argument returns the user count for the channel", Pusher.HttpClient,
   [get!: fn("/apps/app_id/channels/test_info_channel", %{}, qs: %{info: "subscription_count"}) -> @response_with_channel_info end] do
     result = Pusher.channel "test_info_channel"
-    expected = {200, %{"occupied" => true, "user_count" => 42}}
+    expected = {:ok, %{"occupied" => true, "user_count" => 42}}
     assert result == expected
   end
 
@@ -70,7 +70,7 @@ defmodule PusherTest do
   test_with_mock ".users returns users in a presence channel", Pusher.HttpClient,
   [get!: fn("/apps/app_id/channels/presence-foobar/users") -> @response_with_users end] do
     result = Pusher.users "presence-foobar"
-    expected = {200, %{"users" => [%{"id" => 3}, %{"id" => 57}]}}
+    expected = {:ok, [%{"id" => 3}, %{"id" => 57}]}
     assert result == expected
   end
 

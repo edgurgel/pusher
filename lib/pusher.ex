@@ -12,21 +12,23 @@ defmodule Pusher do
     end |> JSX.encode!
     headers = %{"Content-type" => "application/json"}
     response = HttpClient.post!("/apps/#{app_id}/events", body, headers)
-    response.status_code
+    if response_success?(response) do
+      :ok
+    else
+      :error
+    end
   end
-
-  defp channel_list(channels) when is_list(channels), do: channels
-  defp channel_list(channel), do: [channel]
-
-  defp encoded_data(data) when is_binary(data), do: data
-  defp encoded_data(data), do: JSX.encode!(data)
 
   @doc """
   Get the list of occupied channels
   """
   def channels do
     response = HttpClient.get!("/apps/#{app_id}/channels")
-    {response.status_code, response.body}
+    if response_success?(response) do
+      {:ok, response.body["channels"]}
+    else
+      {:error, response.body}
+    end
   end
 
   @doc """
@@ -34,8 +36,11 @@ defmodule Pusher do
   """
   def channel(channel) do
     response = HttpClient.get!("/apps/#{app_id}/channels/#{channel}", %{}, qs: %{info: "subscription_count"})
-
-    {response.status_code, response.body}
+    if response_success?(response) do
+      {:ok, response.body}
+    else
+      {:error, response.body}
+    end
   end
 
   @doc """
@@ -43,8 +48,11 @@ defmodule Pusher do
   """
   def users(channel) do
     response = HttpClient.get!("/apps/#{app_id}/channels/#{channel}/users")
-
-    {response.status_code, response.body}
+    if response_success?(response) do
+      {:ok, response.body["users"]}
+    else
+      {:error, response.body}
+    end
   end
 
   def configure!(host, port, app_id, app_key, secret) do
@@ -55,9 +63,17 @@ defmodule Pusher do
     :application.set_env(:pusher, :secret, secret)
   end
 
+  defp channel_list(channels) when is_list(channels), do: channels
+  defp channel_list(channel), do: [channel]
+
+  defp encoded_data(data) when is_binary(data), do: data
+  defp encoded_data(data), do: JSX.encode!(data)
+
   defp app_id do
     {:ok, app_id} = :application.get_env(:pusher, :app_id)
     app_id
   end
+
+  defp response_success?(response), do: response.status_code == 200
 
 end
