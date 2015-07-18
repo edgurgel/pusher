@@ -3,12 +3,12 @@ notifications:
   recipients:
     - eduardo@gurgel.me
 otp_release:
-  - 17.0
-  - 17.1
-  - 17.3
+  - 17.4
+  - 17.5
+  - 18.0
 elixir:
-  - 1.0.0
-  - 1.0.1
+  - 1.0.4
+  - 1.0.5
 env:
   - MIX_ENV=test
 script: mix test --no-start
