@@ -1,7 +1,5 @@
 defmodule Pusher do
-  use HTTPoison.Base
-
-  alias Signaturex.CryptoHelper
+  alias Pusher.HttpClient
 
   @doc """
   Trigger a simple `event` on `channels` sending some `data`
@@ -13,70 +11,48 @@ defmodule Pusher do
       _ -> %{name: event, channels: channel_list(channels), data: data, socket_id: socket_id}
     end |> JSX.encode!
     headers = %{"Content-type" => "application/json"}
-    response = post!("/apps/#{app_id}/events", body, headers)
-    response.status_code
+    response = HttpClient.post!("/apps/#{app_id}/events", body, headers)
+    if response_success?(response) do
+      :ok
+    else
+      :error
+    end
   end
-
-  defp channel_list(channels) when is_list(channels), do: channels
-  defp channel_list(channel), do: [channel]
-
-  defp encoded_data(data) when is_binary(data), do: data
-  defp encoded_data(data), do: JSX.encode!(data)
 
   @doc """
   Get the list of occupied channels
   """
   def channels do
-    response = get!("/apps/#{app_id}/channels")
-
-    {response.status_code, response.body}
+    response = HttpClient.get!("/apps/#{app_id}/channels")
+    if response_success?(response) do
+      {:ok, response.body["channels"]}
+    else
+      {:error, response.body}
+    end
   end
 
   @doc """
   Get info related to the `channel`
   """
   def channel(channel) do
-    response = get!("/apps/#{app_id}/channels/#{channel}", %{}, qs: %{info: "subscription_count"})
-
-    {response.status_code, response.body}
+    response = HttpClient.get!("/apps/#{app_id}/channels/#{channel}", %{}, qs: %{info: "subscription_count"})
+    if response_success?(response) do
+      {:ok, response.body}
+    else
+      {:error, response.body}
+    end
   end
 
   @doc """
   Get the list of users on the prensece `channel`
   """
   def users(channel) do
-    response = get!("/apps/#{app_id}/channels/#{channel}/users")
-
-    {response.status_code, response.body}
-  end
-
-  defp process_url(url), do: base_url <> url
-
-  defp base_url do
-    {:ok, host} = :application.get_env(:pusher, :host)
-    {:ok, port} = :application.get_env(:pusher, :port)
-    "#{host}:#{port}"
-  end
-
-  defp process_response_body(body) do
-    unless body == "", do: body |> JSX.decode!, else: nil
-  end
-
-  @doc """
-  More info at: http://pusher.com/docs/rest_api#authentication
-  """
-  def request(method, path, body \\ "", headers \\ [], options \\ []) do
-    qs_vals = build_qs(Keyword.get(options, :qs, %{}), body)
-    signed_qs_vals =
-      Signaturex.sign(app_key, secret, method, path, qs_vals)
-      |> Dict.merge(qs_vals)
-      |> URI.encode_query
-    super(method, path <> "?" <> signed_qs_vals, body, headers, options)
-  end
-
-  def build_qs(qs_vals, ""), do: qs_vals
-  def build_qs(qs_vals, body) do
-    Map.put(qs_vals, :body_md5, CryptoHelper.md5_to_string(body))
+    response = HttpClient.get!("/apps/#{app_id}/channels/#{channel}/users")
+    if response_success?(response) do
+      {:ok, response.body["users"]}
+    else
+      {:error, response.body}
+    end
   end
 
   def configure!(host, port, app_id, app_key, secret) do
@@ -87,18 +63,17 @@ defmodule Pusher do
     :application.set_env(:pusher, :secret, secret)
   end
 
+  defp channel_list(channels) when is_list(channels), do: channels
+  defp channel_list(channel), do: [channel]
+
+  defp encoded_data(data) when is_binary(data), do: data
+  defp encoded_data(data), do: JSX.encode!(data)
+
   defp app_id do
     {:ok, app_id} = :application.get_env(:pusher, :app_id)
     app_id
   end
 
-  defp secret do
-    {:ok, secret} = :application.get_env(:pusher, :secret)
-    secret
-  end
+  defp response_success?(response), do: response.status_code == 200
 
-  defp app_key do
-    {:ok, app_key} = :application.get_env(:pusher, :app_key)
-    app_key
-  end
 end

@@ -30,14 +30,14 @@ defmodule Pusher.Mixfile do
 
   defp deps do
     [ {:httpoison, "~> 0.6.0"},
-      {:signaturex, "~> 0.0.7"},
-      {:exjsx, "~> 3.0"},
-      {:meck, "~> 0.8.2", only: :test } ]
-   end
+    {:signaturex, "~> 0.0.7"},
+    {:exjsx, "~> 3.0"},
+    {:mock, "~> 0.1.1", only: [:dev, :test] } ]
+  end
 
-   defp package do
-     [ contributors: ["Eduardo Gurgel Pinho"],
-       licenses: ["MIT"],
-       links: %{"Github" => "https://github.com/edgurgel/pusher"} ]
-   end
+  defp package do
+    [ contributors: ["Eduardo Gurgel Pinho"],
+    licenses: ["MIT"],
+    links: %{"Github" => "https://github.com/edgurgel/pusher"} ]
+  end
 end
