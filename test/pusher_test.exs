@@ -38,6 +38,20 @@ defmodule PusherTest do
     assert result == expected
   end
 
+  @expected_payload_with_socket_id %{
+    name: "event-name",
+    channels: ["channel"],
+    data: "data",
+    socket_id: "blah"
+    } |> JSX.encode!
+
+    test_with_mock ".trigger sends the payload with a socket_id", Pusher.HttpClient,
+    [post!: fn("/apps/app_id/events", @expected_payload_with_socket_id, _) -> @response_succesful_message end] do
+      result = Pusher.trigger("event-name", "data", "channel", "blah")
+      expected = :ok
+      assert result == expected
+    end
+
   @response_with_channel %HTTPoison.Response{
     body: %{"channels" => %{"test_channel" => %{}}},
     status_code: 200

@@ -6,10 +6,8 @@ defmodule Pusher do
   """
   def trigger(event, data, channels, socket_id \\ nil) do
     data = encoded_data(data)
-    body = case socket_id do
-      nil -> %{name: event, channels: channel_list(channels), data: data}
-      _ -> %{name: event, channels: channel_list(channels), data: data, socket_id: socket_id}
-    end |> JSX.encode!
+    body = event_body(event, data, channels, socket_id)
+      |> JSX.encode!
     headers = %{"Content-type" => "application/json"}
     response = HttpClient.post!("/apps/#{app_id}/events", body, headers)
     if response_success?(response) do
@@ -17,6 +15,15 @@ defmodule Pusher do
     else
       :error
     end
+  end
+
+  defp event_body(event, data, channels, nil) do
+    %{name: event, channels: channel_list(channels), data: data}
+  end
+
+  defp event_body(event, data, channels, socket_id) do
+    event_body(event, data, channels, nil)
+      |> Dict.put(:socket_id, socket_id)
   end
 
   @doc """

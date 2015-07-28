@@ -1,6 +1,6 @@
 defmodule Pusher.HttpClient do
   use HTTPoison.Base
-  alias Signaturex.CryptoHelper
+  alias Pusher.RequestSigner
 
   defp process_url(url), do: base_url <> url
 
@@ -18,17 +18,11 @@ defmodule Pusher.HttpClient do
   More info at: http://pusher.com/docs/rest_api#authentication
   """
   def request(method, path, body \\ "", headers \\ [], options \\ []) do
-    qs_vals = build_qs(Keyword.get(options, :qs, %{}), body)
-    signed_qs_vals =
-    Signaturex.sign(app_key, secret, method, path, qs_vals)
-    |> Dict.merge(qs_vals)
-    |> URI.encode_query
-    super(method, path <> "?" <> signed_qs_vals, body, headers, options)
-  end
+    query_string = Keyword.get(options, :qs, %{})
+      |> RequestSigner.sign_query_string(body, app_key, secret, method, path)
+      |> URI.encode_query
 
-  def build_qs(qs_vals, ""), do: qs_vals
-  def build_qs(qs_vals, body) do
-    Map.put(qs_vals, :body_md5, CryptoHelper.md5_to_string(body))
+    super(method, path <> "?" <> query_string, body, headers, options)
   end
 
   defp secret do
