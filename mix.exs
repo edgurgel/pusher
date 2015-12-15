@@ -29,7 +29,7 @@ defmodule Pusher.Mixfile do
   end
 
   defp deps do
-    [ {:httpoison, "~> 0.6.0"},
+    [{:httpoison, "~> 0.8"},
     {:signaturex, "~> 0.0.7"},
     {:exjsx, "~> 3.0"},
     {:mock, "~> 0.1.1", only: [:dev, :test] } ]
