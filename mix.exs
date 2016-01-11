@@ -8,7 +8,7 @@ defmodule Pusher.Mixfile do
   def project do
     [ app: :pusher,
       version: "0.1.0",
-      elixir: "~> 1.0.0",
+      elixir: "~> 1.0",
       name: "Pusher",
       description: @description,
       package: package,
@@ -36,7 +36,7 @@ defmodule Pusher.Mixfile do
   end
 
   defp package do
-    [ contributors: ["Eduardo Gurgel Pinho"],
+    [ maintainers: ["Eduardo Gurgel Pinho"],
     licenses: ["MIT"],
     links: %{"Github" => "https://github.com/edgurgel/pusher"} ]
   end
