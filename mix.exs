@@ -12,6 +12,7 @@ defmodule Pusher.Mixfile do
       name: "Pusher",
       description: @description,
       package: package,
+      source_url: "https://github.com/edgurgel/pusher",
       deps: deps ]
   end
 
@@ -30,9 +31,11 @@ defmodule Pusher.Mixfile do
 
   defp deps do
     [{:httpoison, "~> 0.8"},
-    {:signaturex, "~> 0.0.7"},
-    {:exjsx, "~> 3.0"},
-    {:mock, "~> 0.1.1", only: [:dev, :test] } ]
+     {:signaturex, "~> 0.0.7"},
+     {:exjsx, "~> 3.0"},
+     {:earmark, "~> 0.1.17", only: :docs},
+     {:ex_doc, "~> 0.8.0", only: :docs},
+     {:mock, "~> 0.1.1", only: [:dev, :test] } ]
   end
 
   defp package do
