@@ -1,5 +1,4 @@
-# Pusher [![Build Status](https://travis-ci.org/edgurgel/pusher.png?branch=master)](https://travis-ci.org/edgurgel/pusher)
-
+# Pusher [![Build Status](https://travis-ci.org/edgurgel/pusher.png?branch=master)](https://travis-ci.org/edgurgel/pusher) [![Hex pm](http://img.shields.io/hexpm/v/pusher.svg?style=flat)](https://hex.pm/packages/pusher)
 ## Description
 
 Elixir library to access the Pusher REST API.
