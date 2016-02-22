@@ -18,7 +18,7 @@ defmodule Pusher.Mixfile do
 
    def application do
     [
-      applications: [ :httpoison, :exjsx ],
+      applications: [ :httpoison, :exjsx, :signaturex ],
       env: [
         host: "http://localhost",
         port: "8080",
