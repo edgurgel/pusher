@@ -31,7 +31,7 @@ defmodule Pusher.Mixfile do
 
   defp deps do
     [{:httpoison, "~> 0.8"},
-     {:signaturex, "~> 0.0.7"},
+     {:signaturex, "~> 1.0"},
      {:exjsx, "~> 3.0"},
      {:earmark, "~> 0.1.17", only: :docs},
      {:ex_doc, "~> 0.8.0", only: :docs},
