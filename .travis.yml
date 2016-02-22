@@ -1,16 +1,25 @@
 language: elixir
-notifications:
-  recipients:
-    - eduardo@gurgel.me
+
 otp_release:
   - 17.4
   - 17.5
   - 18.0
+
 elixir:
   - 1.0.4
   - 1.0.5
   - 1.1.0
-  - 1.2.3
+
+matrix:
+  include:
+    - otp_release: 18.0
+      elixir: 1.2.3
+
 env:
   - MIX_ENV=test
+
 script: mix test --no-start
+
+notifications:
+  recipients:
+    - eduardo@gurgel.me
