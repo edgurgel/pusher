@@ -33,7 +33,7 @@ defmodule Pusher.HttpClient do
       String.match?(body, ~r/{.*}/) -> 
         :ok
       true ->
-        {:invalid_repsonse, body}
+        {:invalid_response, body}
     end
   end
 
