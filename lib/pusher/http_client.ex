@@ -11,8 +11,10 @@ defmodule Pusher.HttpClient do
   end
 
   defp process_response_body(body) do
-    :ok = validate_response_body(body)
-    body |> JSX.decode!
+    case JSX.decode(body) do
+      {:ok, json} -> {:ok, json}
+      {:error, _} -> {:invalid_response, body}
+    end
   end
 
   @doc """
@@ -24,17 +26,6 @@ defmodule Pusher.HttpClient do
       |> URI.encode_query
 
     super(method, path <> "?" <> query_string, body, headers, options)
-  end
-
-  defp validate_response_body(body) do 
-    cond do
-      body == "" -> 
-        {:invalid_response, :empty_body}
-      String.match?(body, ~r/{.*}/) -> 
-        :ok
-      true ->
-        {:invaldi_repsonse, body}
-    end
   end
 
   defp secret do
