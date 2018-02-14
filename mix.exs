@@ -44,7 +44,7 @@ defmodule Pusher.Mixfile do
 
   defp package do
     [
-      maintainers: ["Eduardo Gurgel Pinho"],
+      maintainers: ["Eduardo Gurgel Pinho", "Bernat Jufré"],
       licenses: ["MIT"],
       links: %{"Github" => "https://github.com/edgurgel/pusher"}
     ]
