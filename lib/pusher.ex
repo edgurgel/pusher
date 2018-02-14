@@ -6,10 +6,14 @@ defmodule Pusher do
   """
   def trigger(event, data, channels, socket_id \\ nil) do
     data = encoded_data(data)
-    body = event_body(event, data, channels, socket_id)
-      |> JSX.encode!
+
+    body =
+      event_body(event, data, channels, socket_id)
+      |> JSX.encode!()
+
     headers = %{"Content-type" => "application/json"}
-    response = HttpClient.post!("/apps/#{app_id}/events", body, headers)
+    response = HttpClient.post!("/apps/#{app_id()}/events", body, headers)
+
     if response_success?(response) do
       :ok
     else
@@ -23,14 +27,15 @@ defmodule Pusher do
 
   defp event_body(event, data, channels, socket_id) do
     event_body(event, data, channels, nil)
-      |> Dict.put(:socket_id, socket_id)
+    |> Map.put(:socket_id, socket_id)
   end
 
   @doc """
   Get the list of occupied channels
   """
   def channels do
-    response = HttpClient.get!("/apps/#{app_id}/channels")
+    response = HttpClient.get!("/apps/#{app_id()}/channels")
+
     if response_success?(response) do
       {:ok, response.body["channels"]}
     else
@@ -42,7 +47,13 @@ defmodule Pusher do
   Get info related to the `channel`
   """
   def channel(channel) do
-    response = HttpClient.get!("/apps/#{app_id}/channels/#{channel}", %{}, qs: %{info: "subscription_count"})
+    response =
+      HttpClient.get!(
+        "/apps/#{app_id()}/channels/#{channel}",
+        %{},
+        qs: %{info: "subscription_count"}
+      )
+
     if response_success?(response) do
       {:ok, response.body}
     else
@@ -54,7 +65,8 @@ defmodule Pusher do
   Get the list of users on the prensece `channel`
   """
   def users(channel) do
-    response = HttpClient.get!("/apps/#{app_id}/channels/#{channel}/users")
+    response = HttpClient.get!("/apps/#{app_id()}/channels/#{channel}/users")
+
     if response_success?(response) do
       {:ok, response.body["users"]}
     else
@@ -82,5 +94,4 @@ defmodule Pusher do
   end
 
   defp response_success?(response), do: response.status_code == 200
-
 end
