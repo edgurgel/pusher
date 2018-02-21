@@ -8,7 +8,7 @@ defmodule Pusher.Mixfile do
   def project do
     [
       app: :pusher,
-      version: "0.1.4",
+      version: "1.0.0",
       elixir: "~> 1.5",
       name: "Pusher",
       description: @description,
