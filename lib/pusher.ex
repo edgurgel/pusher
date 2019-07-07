@@ -4,20 +4,19 @@ defmodule Pusher do
   @doc """
   Trigger a simple `event` on `channels` sending some `data`
   """
-  def trigger(event, data, channels, socket_id \\ nil) do
+  def trigger(client, event, data, channels, socket_id \\ nil) do
     data = encoded_data(data)
 
     body =
       event_body(event, data, channels, socket_id)
-      |> JSX.encode!()
+      |> Jason.encode!()
 
     headers = %{"Content-type" => "application/json"}
-    response = HttpClient.post!("/apps/#{app_id()}/events", body, headers)
 
-    if response_success?(response) do
-      :ok
-    else
-      :error
+    case HttpClient.post("/apps/#{client.app_id}/events", body, headers, client: client) do
+      {:ok, %HTTPoison.Response{status_code: 200}} -> :ok
+      {:ok, response} -> {:error, response}
+      {:error, reason} -> {:error, reason}
     end
   end
 
@@ -33,65 +32,43 @@ defmodule Pusher do
   @doc """
   Get the list of occupied channels
   """
-  def channels do
-    response = HttpClient.get!("/apps/#{app_id()}/channels")
-
-    if response_success?(response) do
-      {:ok, response.body["channels"]}
-    else
-      {:error, response.body}
+  def channels(client) do
+    case HttpClient.get("/apps/#{client.app_id}/channels", [], client: client) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> {:ok, body["channels"]}
+      {:ok, response} -> {:error, response}
+      {:error, reason} -> {:error, reason}
     end
   end
 
   @doc """
   Get info related to the `channel`
   """
-  def channel(channel) do
-    response =
-      HttpClient.get!(
-        "/apps/#{app_id()}/channels/#{channel}",
-        %{},
-        qs: %{info: "subscription_count"}
-      )
+  def channel(client, channel) do
+    path = "/apps/#{client.app_id}/channels/#{channel}"
 
-    if response_success?(response) do
-      {:ok, response.body}
-    else
-      {:error, response.body}
+    case HttpClient.get(path, %{}, qs: %{info: "subscription_count"}, client: client) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> {:ok, body}
+      {:ok, response} -> {:error, response}
+      {:error, reason} -> {:error, reason}
     end
   end
 
   @doc """
   Get the list of users on the prensece `channel`
   """
-  def users(channel) do
-    response = HttpClient.get!("/apps/#{app_id()}/channels/#{channel}/users")
+  def users(client, channel) do
+    path = "/apps/#{client.app_id}/channels/#{channel}/users"
 
-    if response_success?(response) do
-      {:ok, response.body["users"]}
-    else
-      {:error, response.body}
+    case HttpClient.get(path, [], client: client) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> {:ok, body["users"]}
+      {:ok, response} -> {:error, response}
+      {:error, reason} -> {:error, reason}
     end
-  end
-
-  def configure!(host, port, app_id, app_key, secret) do
-    :application.set_env(:pusher, :host, host)
-    :application.set_env(:pusher, :port, port)
-    :application.set_env(:pusher, :app_id, app_id)
-    :application.set_env(:pusher, :app_key, app_key)
-    :application.set_env(:pusher, :secret, secret)
   end
 
   defp channel_list(channels) when is_list(channels), do: channels
   defp channel_list(channel), do: [channel]
 
   defp encoded_data(data) when is_binary(data), do: data
-  defp encoded_data(data), do: JSX.encode!(data)
-
-  defp app_id do
-    {:ok, app_id} = :application.get_env(:pusher, :app_id)
-    app_id
-  end
-
-  defp response_success?(response), do: response.status_code == 200
+  defp encoded_data(data), do: Jason.encode!(data)
 end

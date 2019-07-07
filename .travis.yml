@@ -1,27 +1,27 @@
 language: elixir
 
-otp_release:
-  - 19.0
-  - 19.1
-  - 19.2
-  - 20.2
+script:
+  - mix test
+  - if [[ `elixir -v` = *"1.8"* ]]; then mix format --check-formatted; fi
 
-elixir:
-  - 1.5.0
-  - 1.6.0
+cache:
+  directories:
+    - deps
 
 matrix:
   include:
-    - otp_release: 20.2
-      elixir: 1.6.0
+      otp_release: 21.0
+    - elixir: 1.7
+      otp_release: 19.3
+    - elixir: 1.7
+      otp_release: 20.3
+    - elixir: 1.7
+      otp_release: 21.0
+    - elixir: 1.8
+      otp_release: 20.3
+    - elixir: 1.8
+      otp_release: 21.0
+    - elixir: 1.8
+      otp_release: 22.0.1
 
 sudo: false
-
-env:
-  - MIX_ENV=test
-
-script: mix test --no-start
-
-notifications:
-  recipients:
-    - eduardo@gurgel.me
