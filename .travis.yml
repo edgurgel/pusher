@@ -1,16 +1,15 @@
 language: elixir
+sudo: false
+cache:
+  directories:
+    - deps
 
 script:
   - mix test
   - if [[ `elixir -v` = *"1.8"* ]]; then mix format --check-formatted; fi
 
-cache:
-  directories:
-    - deps
-
 matrix:
   include:
-      otp_release: 21.0
     - elixir: 1.7
       otp_release: 19.3
     - elixir: 1.7
@@ -23,5 +22,3 @@ matrix:
       otp_release: 21.0
     - elixir: 1.8
       otp_release: 22.0.1
-
-sudo: false
