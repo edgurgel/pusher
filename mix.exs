@@ -14,7 +14,11 @@ defmodule Pusher.Mixfile do
       description: @description,
       package: package(),
       source_url: "https://github.com/edgurgel/pusher",
-      deps: deps()
+      deps: deps(),
+      docs: [
+        main: "readme",
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -28,8 +32,7 @@ defmodule Pusher.Mixfile do
       {:signaturex, "~> 1.3.0"},
       {:jason, "~> 1.0"},
       {:mimic, "~> 1.0", only: :test},
-      {:ex_doc, "~> 0.16", only: :dev, runtime: false},
-      {:earmark, ">= 1.2.3", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false}
     ]
   end
 
