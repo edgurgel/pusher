@@ -31,6 +31,7 @@ defmodule Pusher.Mixfile do
       {:httpoison, "~> 1.0"},
       {:signaturex, "~> 1.3.0"},
       {:jason, "~> 1.0"},
+      {:websockex, "~> 0.4.0"},
       {:mimic, "~> 1.0", only: :test},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false}
     ]
