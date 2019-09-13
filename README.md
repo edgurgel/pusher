@@ -10,8 +10,8 @@ Elixir library to access the Pusher REST API.
 Define your Pusher.Client
 
 ```elixir
-ciient = Pusher.Client%{app_id: "app_id", app_key: "app_key", secret: "my_secret"}
-ciient = Pusher.Client%{endpoint: "https://my_custom_pusher:8080", app_id: "app_id", app_key: "app_key", secret: "my_secret"}
+ciient = %Pusher.Client{app_id: "app_id", app_key: "app_key", secret: "my_secret"}
+ciient = %Pusher.Client{endpoint: "https://my_custom_pusher:8080", app_id: "app_id", app_key: "app_key", secret: "my_secret"}
 ```
 
 ```elixir
