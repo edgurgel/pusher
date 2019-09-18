@@ -4,7 +4,10 @@ defmodule Pusher.HttpClient do
   alias Pusher.Client
 
   def process_response_body(body) do
-    unless body == "", do: body |> Jason.decode!(), else: nil
+    case Jason.decode(body) do
+      {:ok, response} -> response
+      {:error, _reason} -> body
+    end
   end
 
   @doc """
