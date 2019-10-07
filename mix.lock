@@ -10,7 +10,7 @@
   "makeup_elixir": {:hex, :makeup_elixir, "0.14.0", "cf8b7c66ad1cff4c14679698d532f0b5d45a3968ffbcbfd590339cb57742f1ae", [:mix], [{:makeup, "~> 1.0", [hex: :makeup, repo: "hexpm", optional: false]}], "hexpm"},
   "metrics": {:hex, :metrics, "1.0.1", "25f094dea2cda98213cecc3aeff09e940299d950904393b2a29d191c346a8486", [:rebar3], [], "hexpm"},
   "mimerl": {:hex, :mimerl, "1.2.0", "67e2d3f571088d5cfd3e550c383094b47159f3eee8ffa08e64106cdf5e981be3", [:rebar3], [], "hexpm"},
-  "mimic": {:hex, :mimic, "1.0.0", "6108d6b19e794525c7ca68877347a9f8895e8f28aea618cd976e8a150c59d0f8", [:mix], [], "hexpm"},
+  "mimic": {:hex, :mimic, "1.1.2", "829a13ddefaa34185cffc3777d26c98fe1b19878350fea13536cda0430d92f15", [:mix], [], "hexpm"},
   "nimble_parsec": {:hex, :nimble_parsec, "0.5.1", "c90796ecee0289dbb5ad16d3ad06f957b0cd1199769641c961cfe0b97db190e0", [:mix], [], "hexpm"},
   "parse_trans": {:hex, :parse_trans, "3.3.0", "09765507a3c7590a784615cfd421d101aec25098d50b89d7aa1d66646bc571c1", [:rebar3], [], "hexpm"},
   "signaturex": {:hex, :signaturex, "1.3.0", "47b7431990f3b38540803de013cc809e8dad248dade0aad01ef2c5661c02c7a3", [:mix], [], "hexpm"},
