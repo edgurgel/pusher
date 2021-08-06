@@ -8,7 +8,7 @@ defmodule Pusher.Mixfile do
   def project do
     [
       app: :pusher,
-      version: "2.2.1",
+      version: "2.3.0",
       elixir: "~> 1.7",
       name: "Pusher",
       description: @description,
@@ -33,7 +33,8 @@ defmodule Pusher.Mixfile do
       {:jason, "~> 1.0"},
       {:websockex, "~> 0.4.0"},
       {:mimic, "~> 1.0", only: :test},
-      {:ex_doc, "~> 0.19", only: :dev, runtime: false}
+      {:earmark, "~> 1.0", only: :dev},
+      {:ex_doc, "~> 0.25", only: :dev}
     ]
   end
 
