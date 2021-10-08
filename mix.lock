@@ -12,7 +12,7 @@
   "makeup_erlang": {:hex, :makeup_erlang, "0.1.1", "3fcb7f09eb9d98dc4d208f49cc955a34218fc41ff6b84df7c75b3e6e533cc65f", [:mix], [{:makeup, "~> 1.0", [hex: :makeup, repo: "hexpm", optional: false]}], "hexpm", "174d0809e98a4ef0b3309256cbf97101c6ec01c4ab0b23e926a9e17df2077cbb"},
   "metrics": {:hex, :metrics, "1.0.1", "25f094dea2cda98213cecc3aeff09e940299d950904393b2a29d191c346a8486", [:rebar3], [], "hexpm", "69b09adddc4f74a40716ae54d140f93beb0fb8978d8636eaded0c31b6f099f16"},
   "mimerl": {:hex, :mimerl, "1.2.0", "67e2d3f571088d5cfd3e550c383094b47159f3eee8ffa08e64106cdf5e981be3", [:rebar3], [], "hexpm", "f278585650aa581986264638ebf698f8bb19df297f66ad91b18910dfc6e19323"},
-  "mimic": {:hex, :mimic, "1.0.0", "6108d6b19e794525c7ca68877347a9f8895e8f28aea618cd976e8a150c59d0f8", [:mix], [], "hexpm", "f9c43789797e94fa42dfc8452a70c0bf9ddc9634ab1de9eb3a614495bcfbb922"},
+  "mimic": {:hex, :mimic, "1.5.1", "085f7ebfeb5b579a13a167aec3c712d71fecfc6cb8b298c0dd3056f97ea2c2a0", [:mix], [], "hexpm", "33a50ef9ff38f8f24b2586d52e529981a3ba2b8d061c872084aff0e993bf4bd5"},
   "nimble_parsec": {:hex, :nimble_parsec, "1.1.0", "3a6fca1550363552e54c216debb6a9e95bd8d32348938e13de5eda962c0d7f89", [:mix], [], "hexpm", "08eb32d66b706e913ff748f11694b17981c0b04a33ef470e33e11b3d3ac8f54b"},
   "parse_trans": {:hex, :parse_trans, "3.3.0", "09765507a3c7590a784615cfd421d101aec25098d50b89d7aa1d66646bc571c1", [:rebar3], [], "hexpm", "17ef63abde837ad30680ea7f857dd9e7ced9476cdd7b0394432af4bfc241b960"},
   "signaturex": {:hex, :signaturex, "1.4.0", "bd319a013a0a3fd7788fc1d7e05cab1f1681b4e4fc497a379d137b33cb5e3d61", [:mix], [], "hexpm", "5e6972d246f2ee1a8f017bde5695382b44b9ce79baa148e6ae99d95c04e265cf"},
