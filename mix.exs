@@ -8,8 +8,8 @@ defmodule Pusher.Mixfile do
   def project do
     [
       app: :pusher,
-      version: "2.4.0",
-      elixir: "~> 1.7",
+      version: "2.5.0",
+      elixir: "~> 1.16",
       name: "Pusher",
       description: @description,
       package: package(),
@@ -28,7 +28,7 @@ defmodule Pusher.Mixfile do
 
   defp deps do
     [
-      {:httpoison, "~> 1.0"},
+      {:httpoison, "~> 2.0"},
       {:signaturex, "~> 1.4"},
       {:jason, "~> 1.0"},
       {:websockex, "~> 0.4.0"},
